@@ -546,4 +546,81 @@
     p.className = 'petal';
     p.style.left = Math.random()*100 + 'vw';
     p.style.background = petalColors[i % petalColors.length];
-    p.
+    p.style.width = p.style.height = (6 + Math.random()*6) + 'px';
+    const dur = 9 + Math.random()*9;
+    p.style.animationDuration = dur + 's, ' + (dur/2.2) + 's';
+    p.style.animationDelay = (-Math.random()*dur) + 's, 0s';
+    p.style.opacity = .3 + Math.random()*.35;
+    petalLayer.appendChild(p);
+  }
+
+  // ---- scroll reveal ----
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        en.target.classList.add('in');
+        if(en.target.querySelector('#mapBox')) en.target.querySelector('#mapBox').classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, {threshold:.25});
+  revealEls.forEach(el=>io.observe(el));
+
+  // ---- countdown ----
+  const target = new Date('2026-12-18T20:00:00');
+  let prev = {d:null,h:null,m:null,s:null};
+  function pulseIfChanged(id, val, key){
+    const el = document.getElementById(id);
+    if(prev[key] !== val){
+      el.textContent = val;
+      el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
+      prev[key] = val;
+    }
+  }
+  function tick(){
+    const now = new Date();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2,'0');
+    pulseIfChanged('cd-days', pad(d), 'd');
+    pulseIfChanged('cd-hours', pad(h), 'h');
+    pulseIfChanged('cd-mins', pad(m), 'm');
+    pulseIfChanged('cd-secs', pad(s), 's');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  const rsvpBtn = document.getElementById('rsvpBtn');
+  const rsvpSub = document.getElementById('rsvpSub');
+  rsvpBtn.addEventListener('click', () => {
+    rsvpBtn.classList.add('confirmed');
+    rsvpBtn.textContent = 'Présence confirmée ✓';
+    rsvpSub.textContent = 'Merci, nous avons hâte de vous voir !';
+  });
+
+  document.getElementById('calLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const ics = [
+      'BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+      'SUMMARY:Mariage de Walid et Shaïma',
+      'DTSTART:20261218T180000Z',
+      'DTEND:20261218T220000Z',
+      'LOCATION:Domaine des Roses, 12 avenue des Lilas, Lyon',
+      'DESCRIPTION:Nous serions heureux de vous compter parmi nous',
+      'END:VEVENT','END:VCALENDAR'
+    ].join('\n');
+    const blob = new Blob([ics], {type:'text/calendar'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'invitation-mariage.ics';
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  document.body.style.overflow = 'hidden';
+</script>
+</body>
+</html>
