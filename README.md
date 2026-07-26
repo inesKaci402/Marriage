@@ -568,7 +568,7 @@
   revealEls.forEach(el=>io.observe(el));
 
   // ---- countdown ----
-  const target = new Date('2026-12-18T20:00:00');
+  const target = new Date('2026-09-04T13:00:00');
   let prev = {d:null,h:null,m:null,s:null};
   function pulseIfChanged(id, val, key){
     const el = document.getElementById(id);
