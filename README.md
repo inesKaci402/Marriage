@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+            font-family: 'Montserrat', sans-serif;
+           <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation de Mariage - Waleed & Sheikha</title>
+    <title>Invitation de Mariage Animée - Waleed & Sheikha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -19,6 +20,602 @@
             background-color: #0f1115;
             font-family: 'Montserrat', sans-serif;
             color: #4a4a4a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px 0;
+            overflow-x: hidden;
+        }
+
+        /* Container Téléphone */
+        .phone-wrapper {
+            width: 100%;
+            max-width: 414px;
+            height: 850px;
+            background: #fdfbf7;
+            border-radius: 45px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 12px #1c1e24;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Notch Dynamic Island */
+        .notch {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 30px;
+            background: #1c1e24;
+            border-radius: 20px;
+            z-index: 1000;
+        }
+
+        /* Écran d'accueil - Enveloppe & Sceau */
+        #envelope-screen {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #f7f1e8 0%, #ebdcd0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+            padding: 30px;
+            text-align: center;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+        }
+
+        #envelope-screen.opened {
+            transform: translateY(-100%) scale(0.9);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope-card {
+            background: #ffffff;
+            padding: 45px 25px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(184, 137, 137, 0.18);
+            border: 1px solid #e8d5cb;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Animation Sceau en Cire */
+        .wax-seal {
+            width: 95px;
+            height: 95px;
+            background: radial-gradient(circle, #c4626e 0%, #8b3a44 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(139, 58, 68, 0.4), inset 0 3px 6px rgba(255,255,255,0.4);
+            margin: 25px 0;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        .wax-seal:hover {
+            transform: scale(1.12) rotate(5deg);
+        }
+
+        .wax-seal::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1.5px dashed rgba(184, 93, 104, 0.5);
+            animation: spinRing 12s linear infinite;
+        }
+
+        @keyframes spinRing {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 10px 25px rgba(139, 58, 68, 0.4); }
+            50% { box-shadow: 0 15px 35px rgba(139, 58, 68, 0.7); }
+        }
+
+        .wax-seal svg {
+            width: 48px;
+            height: 48px;
+            fill: #fcebe6;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        }
+
+        .envelope-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: #5c3a3a;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        .tap-hint {
+            font-size: 0.75rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #a38282;
+            margin-top: 15px;
+            animation: blink 1.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Pétales de Fleurs Animées */
+        .petals-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .petal {
+            position: absolute;
+            background: radial-gradient(circle, #fce8e6 0%, #e8b0b0 100%);
+            border-radius: 15px 0 15px 0;
+            opacity: 0.6;
+            animation: fall 8s linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-20px) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% {
+                transform: translateY(850px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Contenu Principal avec Scroll */
+        .invitation-content {
+            flex: 1;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            padding-top: 40px;
+            background: #fffdfa;
+            position: relative;
+        }
+
+        .invitation-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Animations d'apparition au Scroll */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 40px 25px 30px;
+            text-align: center;
+            background: radial-gradient(circle at top, #fbf4ee 0%, #fffdfa 70%);
+            border-bottom: 1px solid #f0e6df;
+        }
+
+        .bismillah {
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: #9c7a7a;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .couples-names {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            color: #4a2e2e;
+            line-height: 1.2;
+            margin: 15px 0;
+            font-weight: 600;
+            background: linear-gradient(45deg, #4a2e2e, #8c5b5b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ampersand {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            color: #c49a82;
+            margin: 5px 0;
+            -webkit-text-fill-color: initial;
+        }
+
+        .invitation-text {
+            font-size: 0.9rem;
+            color: #7a6868;
+            line-height: 1.6;
+            margin: 20px 0;
+            font-weight: 300;
+        }
+
+        .date-badge {
+            display: inline-block;
+            padding: 10px 24px;
+            border-top: 1px solid #d8c2b5;
+            border-bottom: 1px solid #d8c2b5;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            color: #5c4040;
+            margin-top: 10px;
+        }
+
+        /* Compte à rebours */
+        .countdown-section {
+            padding: 35px 20px;
+            text-align: center;
+            background: #fdf8f5;
+            border-bottom: 1px solid #f0e6df;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            color: #8c6b6b;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .timer-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .timer-box {
+            background: #ffffff;
+            padding: 14px 8px;
+            border-radius: 14px;
+            width: 68px;
+            box-shadow: 0 6px 18px rgba(184, 137, 137, 0.08);
+            border: 1px solid #eee4dd;
+            transition: transform 0.3s ease;
+        }
+
+        .timer-box:hover {
+            transform: translateY(-4px);
+        }
+
+        .timer-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #5c4040;
+        }
+
+        .timer-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a38c8c;
+            margin-top: 4px;
+        }
+
+        /* Lieu & Carte */
+        .location-section {
+            padding: 35px 25px;
+            text-align: center;
+            border-bottom: 1px solid #f0e6df;
+        }
+
+        .venue-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: #4a2e2e;
+            margin-bottom: 8px;
+        }
+
+        .venue-address {
+            font-size: 0.85rem;
+            color: #7a6868;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .map-box {
+            width: 100%;
+            height: 180px;
+            background: #e5e3df;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .map-box iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            width: 100%;
+            padding: 14px 0;
+            background: #ffffff;
+            border: 1px solid #b88d8d;
+            color: #8c5b5b;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(184, 141, 141, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: #8c5b5b;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(140, 91, 91, 0.25);
+        }
+
+        /* Programme Timeline */
+        .program-section {
+            padding: 35px 25px;
+            background: #fdf8f5;
+            border-bottom: 1px solid #f0e6df;
+        }
+
+        .timeline {
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            text-align: left;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-time {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #8c5b5b;
+            width: 70px;
+            flex-shrink: 0;
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: #5c4040;
+            padding-left: 15px;
+            border-left: 2px solid #e8d5cb;
+        }
+
+        /* Formulaire RSVP */
+        .rsvp-section {
+            padding: 35px 25px 50px;
+            text-align: center;
+        }
+
+        .rsvp-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8c6b6b;
+            margin-bottom: 6px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #e2d2c8;
+            border-radius: 12px;
+            background: #ffffff;
+            font-family: inherit;
+            font-size: 0.9rem;
+            color: #4a4a4a;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: #8c5b5b;
+            box-shadow: 0 0 0 3px rgba(140, 91, 91, 0.15);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px 0;
+            background: linear-gradient(135deg, #a87272 0%, #8c5b5b 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(140, 91, 91, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.97);
+        }
+
+        .success-message {
+            display: none;
+            padding: 18px;
+            background: #f0f7f2;
+            color: #2e7d32;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-wrapper">
+        <div class="notch"></div>
+
+        <div class="petals-container" id="petalsContainer"></div>
+
+        <div id="envelope-screen">
+            <div class="envelope-card">
+                <p style="font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #b08d8d;">Invitation Spéciale</p>
+                <div class="wax-seal" onclick="openInvitation()">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,4M12,6E10.5,6 9.3,7.2 9.3,8.7C9.3,10.2 10.5,11.4 12,11.4C13.5,11.4 14.7,10.2 14.7,8.7C14.7,7.2 13.5,6 12,6Z" />
+                    </svg>
+                </div>
+                <div class="envelope-title">Cette invitation est exclusive pour vous</div>
+                <div class="tap-hint">Appuyez pour ouvrir</div>
+            </div>
+        </div>
+
+        <div class="invitation-content" id="invitationContent">
+            
+            <section class="hero-section animate-on-scroll">
+                <div class="bismillah">Avec la bénédiction d'Allah</div>
+                <p style="font-size: 0.8rem; color: #8c6b6b; font-style: italic;">Nous vous invitons à célébrer le mariage de</p>
+                <div class="couples-names">
+                    Waleed <span class="ampersand">&</span> Sheikha
+                </div>
+                <div class="invitation-text">
+                    L'amour ne consiste pas à se regarder l'un l'autre, mais à regarder ensemble dans la même direction.
+                </div>
+                <div class="date-badge">VENDREDI 26 JUIN 2026</div>
+            </section>
+
+            <section class="countdown-section animate-on-scroll">
+                <div class="section-title">Le Grand Jour Dans</div>
+                <div class="timer-grid">
+                    <div class="timer-box"><div class="timer-value" id="days">00</div><div class="timer-label">Jours</div></div>
+                    <div class="timer-box"><div class="timer-value" id="hours">00</div><div class="timer-label">Heures</div></div>
+                    <div class="timer-box"><div class="timer-value" id="minutes">00</div><div class="timer-label">Min</div></div>
+                    <div class="timer-box"><div class="timer-value" id="seconds">00</div><div class="timer-label">Sec</div></div>
+                </div>
+            </section>
+
+            <section class="location-section animate-on-scroll">
+                <div class="section-title">Lieu du Mariage</div>
+                <div class="venue-name">Le Palais des Roses</div>
+                <div class="venue-address">123 Avenue des Fleurs, 75008 Paris</div>
+                <div class="map-box">
+                    <iframe src="https://maps.google.com/maps?q=Paris&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                </div>
+                <a href="https://maps.google.com" target="_blank" class="btn-secondary">Obtenir l'itinéraire</a>
+            </section>
+
+            <section class="program-section animate-on-scroll">
+                <div class="section-title">Programme de la Soirée</div>
+                <div class="timeline">
+                    <div class="timeline-item"><div class="timeline-time">18:30</div><div class="timeline-desc">Accueil & Cocktail</div></div>
+                    <div class="timeline-item"><div class="timeline-time">20:00</div><div class="timeline-desc">Entrée des Mariés</div></div>
+                    <div class="timeline-item"><div class="timeline-time">20:30</div><div class="timeline-desc">Dîner d'Honneur</div></div>
+                    <div class="timeline-item"><div class="timeline-time">22:30</div><div class="timeline-desc">Pièce Montée</div></div>
+                </div>
+            </section>
+
+            <section class="rsvp-section animate-on-scroll">
+                <div class="section-title">Confirmation</div>
+                <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+                    <div class="form-group">
+                        <label>Nom & Prénom</label>
+                        <input type="text" class="form-input" required placeholder="Votre nom complet">
+                    </div>
+                    <div class="form-group">
+                        <label>Présence</label>
+                        <select class="form-select" required>
+                            <option value="oui">Oui, avec plaisir !</option>
+                            <option value="non">Désolé(e), je ne pourrai pas</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Envoyer la réponse</button>
+                </form>
+                <div class="success-message" id="successMessage">✨ Merci ! Votre réponse a bien été enregistrée.</div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Ouverture animée de l'enveloppe
+        function openInvitation() {
+            document.getElementById('envelope-screen').classList.add('opened');
+            createPetals();
+            initScrollAnimations();
+        }
+
+        // Création de pétales de fleurs tombantes
+        function createPetals() {
+            const container = document.getElementById('petalsContainer');
+            for (let i = 0; i < 15; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = Math.random( color: #4a4a4a;
             display: flex;
             justify-content: center;
             align-items: center;
